@@ -139,4 +139,18 @@ public class TourStatus {
         }
         return result;
     }
+
+    /**
+     * returns string of all backpack contents for saving
+     *
+     * @return String ["apple","fruit","dog"]
+     */
+    public String getBackpackItemsStringified(){
+        String res = "[";
+        for(Item item : backpack){
+            res = res + item.getName() + ",";
+        }
+        res = res + "]";
+        return res;
+    }
 }

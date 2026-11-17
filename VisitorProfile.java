@@ -1,16 +1,17 @@
+import java.io.File;
+import java.io.PrintWriter;
+
 public class VisitorProfile {
 
-    private int regularPoints;
-    private int enjoymentPoints;
-    private int distancePoints;
-    private TourStatus tourStatus;
+    private int regularPoints = 0;
+    private int enjoymentPoints = 0;
+    private int distancePoints = 0;
+    private TourStatus tourStatus = TourStatus.getInstance();
 
     /**
      * Public vistor Profile
      */
-    public VisitorProfile(TourStatus tourStatus){
-        this.tourStatus = tourStatus;
-    }
+    public VisitorProfile(){}
 
     /**
      * adds regular score points
@@ -60,7 +61,15 @@ public class VisitorProfile {
      * @param fileName
      */
     public void save(String fileName){
-
+        try {
+            File file = new File(fileName);
+            PrintWriter pw = new PrintWriter(file);
+            String savedFormattedString = this.formatString();
+            pw.print(savedFormattedString);
+            pw.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -70,6 +79,17 @@ public class VisitorProfile {
      * @return VisitorProfile
      */
     public static VisitorProfile load(String fileName){
-
+        return null;
     }
+
+    private String formatString(){
+        return "" +
+                this.regularPoints + "\n" +
+                this.enjoymentPoints + "\n" +
+                this.distancePoints + "\n" +
+                this.tourStatus.getCurrentLocation().getName() + "\n" +
+                // backpack sample format
+                // [ , , , ] use , delimiter after next line
+                this.tourStatus.getBackpackItemsStringified() + "\n";
+     }
 }

@@ -8,6 +8,8 @@ import java.util.Scanner;
  * @author Hudson Maiorana
  */
 public class TourUMW {
+
+    private static String saveFileName = "visitorProfile.txt";
     /**
      * Starts the tour and handles keyboard input.
      *
@@ -34,8 +36,8 @@ public class TourUMW {
 
             TourStatus tour = TourStatus.getInstance();
             tour.setCampus(campus);
-            tour.setCurrentLocation(campus.getStartingLocation());
-            tour.getCurrentLocation().setHaveVisited(true);
+            tour.setCurrentLocation(campus.getStartingLocation()); //needs to pull from saved visitor profile
+            tour.getCurrentLocation().setHaveVisited(true); //need to save whether visited.
             System.out.println(tour.getCurrentLocation().describeLocation());
 
             while (true) {
@@ -45,6 +47,8 @@ public class TourUMW {
                 }
                 String command = input.nextLine().trim();
                 if (command.equalsIgnoreCase("q") || command.equalsIgnoreCase("quit")) {
+                    VisitorProfile vp = new VisitorProfile();
+                    vp.save(saveFileName);
                     break;
                 }
                 System.out.println(parseInput(command).carryOut());
