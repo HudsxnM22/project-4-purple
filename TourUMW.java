@@ -112,6 +112,7 @@ public class TourUMW {
             }
 
             s.useDelimiter("\\*\\*\\*\\*\\*");
+            // Strings -> function(String)
 
             String locationSection = s.next().trim();
             setUpLocations(campus, locationSection);
@@ -121,6 +122,12 @@ public class TourUMW {
 
             String itemSection = s.next().trim();
             setUpItems(campus, itemSection);
+
+            String npcSection = s.next().trim();
+            setUpNPCs(campus, npcSection);
+
+            String eventSection = s.next().trim();
+            setUpEvents(campus, eventSection);
             return campus;
         } catch (Exception e) {
             System.out.println("Incorrect file format.");
@@ -250,5 +257,13 @@ public class TourUMW {
             Item item = new Item(name, message);
             location.addItem(item);
         }
+    }
+
+    private static void setUpNPCs(Campus campus, String npcSection){
+        //fulfill
+    }
+
+    private static void setUpEvents(Campus campus, String eventSection){
+        //fulfill
     }
 }
