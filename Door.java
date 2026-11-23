@@ -6,7 +6,6 @@
 public class Door {
     private String direction;
     private Location leavingLocation;
-    private Location car;
     private Location enteringLocation;
 
     /**
