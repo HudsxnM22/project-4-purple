@@ -143,7 +143,7 @@ public class TourStatus {
     /**
      * returns string of all backpack contents for saving
      *
-     * @return String ["apple","fruit","dog"]
+     * @return String [apple,fruit,dog]
      */
     public String getBackpackItemsStringified(){
         String res = "[";
@@ -152,5 +152,40 @@ public class TourStatus {
         }
         res = res + "]";
         return res;
+    }
+
+    /**
+     * used for saving all locations and their associated items, for edge cases
+     * where users move items from location to location.
+     *
+     * @return [location|[items],location|[item,item]]
+     */
+    public String getAllLocationsAndTheirItems(){
+        //iterate through all locations, append to string.
+        String res = "[";
+        //iterate through all campus locations
+        for(Location location : campus.getAllLocations().values()){
+            String locName = location.getName();
+            //res = [location name|[item,apple,banana,]
+            if (!res.equals("[")) {
+                res += ",";
+            }
+            res = res + locName + "|" + location.getItemsStringified();
+        }
+        res = res + "]";
+        //res = [location name|[apple,banana,orange],location name|[]]
+        return res;
+    }
+    /**
+     * Returns a copy of the backpack for restoring saved items.
+     * @return the items carried by the visitor
+     */
+    public ArrayList<Item> getBackpackItems() {
+        return new ArrayList<>(backpack);
+    }
+
+    /** Empties the backpack before loading saved contents. */
+    public void clearBackpack() {
+        backpack.clear();
     }
 }

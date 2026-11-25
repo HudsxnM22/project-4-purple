@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /** Gear that can be picked up during the campus tour. */
 public class Item {
     private String name;

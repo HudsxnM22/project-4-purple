@@ -180,4 +180,31 @@ public class Location {
         }
         return result;
     }
+    /**
+     * Returns a copy of this location's items.
+     * @return the items currently here
+     */
+    public ArrayList<Item> getItems() {
+        return new ArrayList<>(items);
+    }
+
+    /** Removes all items before restoring a saved location. */
+    public void clearItems() {
+        items.clear();
+    }
+
+    /**
+     * Formats item names for the save file.
+     * @return a comma-separated list inside brackets
+     */
+    public String getItemsStringified() {
+        String result = "[";
+        for (int i = 0; i < items.size(); i++) {
+            if (i > 0) {
+                result += ",";
+            }
+            result += items.get(i).getName();
+        }
+        return result + "]";
+    }
 }

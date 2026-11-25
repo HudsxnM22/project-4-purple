@@ -36,7 +36,15 @@ public class TourUMW {
 
             TourStatus tour = TourStatus.getInstance();
             tour.setCampus(campus);
-            tour.setCurrentLocation(campus.getStartingLocation()); //needs to pull from saved visitor profile
+            tour.setCurrentLocation(campus.getStartingLocation());
+
+            VisitorProfile vp;
+            if (new File(saveFileName).exists()) {
+                vp = VisitorProfile.load(saveFileName);
+            } else {
+                vp = new VisitorProfile();
+            }
+
             tour.getCurrentLocation().setHaveVisited(true); //need to save whether visited.
             System.out.println(tour.getCurrentLocation().describeLocation());
 
@@ -47,7 +55,6 @@ public class TourUMW {
                 }
                 String command = input.nextLine().trim();
                 if (command.equalsIgnoreCase("q") || command.equalsIgnoreCase("quit")) {
-                    VisitorProfile vp = new VisitorProfile();
                     vp.save(saveFileName);
                     break;
                 }
@@ -123,11 +130,14 @@ public class TourUMW {
             String itemSection = s.next().trim();
             setUpItems(campus, itemSection);
 
-            String npcSection = s.next().trim();
-            setUpNPCs(campus, npcSection);
-
-            String eventSection = s.next().trim();
-            setUpEvents(campus, eventSection);
+            if (s.hasNext()) {
+                String npcSection = s.next().trim();
+                setUpNPCs(campus, npcSection);
+            }
+            if (s.hasNext()) {
+                String eventSection = s.next().trim();
+                setUpEvents(campus, eventSection);
+            }
             return campus;
         } catch (Exception e) {
             System.out.println("Incorrect file format.");
@@ -249,7 +259,14 @@ public class TourUMW {
             if (name.isEmpty() || message.isEmpty() || message.indexOf('\n') != -1) {
                 throw new IllegalArgumentException("Invalid item record.");
             }
-            Location location = campus.getLocation(locationName);
+            Location location;
+            //we assign the items to the void location as all items must be associated with a location,
+            //unless we want to have a global cache of what items exist and their associated locations.
+            if(locationName.equals("none")){
+                location = campus.getLocation("void");
+            }else{
+                location = campus.getLocation(locationName);
+            }
             if (location == null) {
                 throw new IllegalArgumentException("Item location not found.");
             }

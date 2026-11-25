@@ -16,6 +16,7 @@ public class Campus {
      */
     public Campus() {
         locations = new Hashtable<>();
+        locations.put("void", new Location("void", "where lost things go!"));
     }
 
     /**
@@ -47,6 +48,11 @@ public class Campus {
      */
     public Location getLocation(String name) {
         return locations.get(name);
+    }
+
+    //add javadoc comment
+    public Hashtable<String, Location> getAllLocations(){
+        return locations;
     }
 
     /**
