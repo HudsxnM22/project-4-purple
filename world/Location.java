@@ -11,6 +11,7 @@ public class Location {
     private Boolean haveVisited;
     private ArrayList<Door> doors;
     private ArrayList<Item> items;
+    private NPC npc;
 
     /**
      * Creates an unvisited location with an empty list of doors.
@@ -129,7 +130,7 @@ public class Location {
      * @return the name, description, doors, and current item listing
      */
     public String describeLocation() {
-        return "\n" + name + "\n" + description + "\n" + describeDoors() + getItemsInLocation();
+        return "\n" + name + "\n" + description + "\n" + describeDoors() + getItemsInLocation() + "\n"  + getNPCinLocation();
     }
 
     /**
@@ -206,5 +207,19 @@ public class Location {
             result += items.get(i).getName();
         }
         return result + "]";
+    }
+    public NPC getNPC() {
+        return npc;
+    }
+    public void addNPC(NPC npc) {
+        this.npc = npc;
+    }
+    public String getNPCinLocation() {
+        if (getNPC() != null) {
+            return "NPCs: " + getNPC().getName();
+        }
+        else {
+            return "There are no NPCs here";
+        }
     }
 }

@@ -47,6 +47,9 @@ public class TourUMW {
 
             tour.getCurrentLocation().setHaveVisited(true); //need to save whether visited.
             System.out.println(tour.getCurrentLocation().describeLocation());
+            if (tour.getCurrentLocation().getNPC() != null) {
+                System.out.println("NPCs: " + tour.getCurrentLocation().getNPC().getName());
+            }
 
             while (true) {
                 System.out.print("Enter n/s/e/w, pickup (p) itemName, drop (d) itemName, " + "backpack (b), or quit (q): ");
@@ -58,7 +61,7 @@ public class TourUMW {
                     vp.save(saveFileName);
                     break;
                 }
-                System.out.println(parseInput(command).carryOut());
+                System.out.println(parseInput(command, input).carryOut());
             }
         }
     }
@@ -69,7 +72,7 @@ public class TourUMW {
      * @param input the user input line, which may be null or blank
      * @return the matching command, or an InvalidCommand for unsupported input
      */
-    public static UserInputCommand parseInput(String input) {
+    public static UserInputCommand parseInput(String input, Scanner scanner) {
         if (input == null) {
             return new InvalidCommand("");
         }
@@ -99,6 +102,10 @@ public class TourUMW {
                 case "drop":
                 case "d":
                     return new DropCommand(itemName);
+            }
+            if (input.toLowerCase().startsWith("speak ")) {
+                String npcName = input.substring(6).trim();
+                return new SpeakCommand(npcName, scanner);
             }
         }
 
@@ -276,8 +283,46 @@ public class TourUMW {
         }
     }
 
-    private static void setUpNPCs(Campus campus, String npcSection){
-        //fulfill
+    private static void setUpNPCs(Campus campus, String npcSection) {
+        String[] npcSubSection = npcSection.split("\\+\\+\\+");
+        for (int i = 0; i < npcSubSection.length; i++) {
+            String npcRecord = npcSubSection[i].trim();
+
+            // Only the first record includes the NPCs: header.
+            if (i == 0) {
+                int headerNewline = npcRecord.indexOf('\n');
+                if (!npcRecord.substring(0, headerNewline).trim().equals("NPCs:")) {
+                    throw new IllegalArgumentException("NPCs header not found.");
+                }
+                npcRecord = npcRecord.substring(headerNewline + 1);
+            }
+
+            int npcNewline = npcRecord.indexOf('\n');
+            String name = npcRecord.substring(0, npcNewline).trim();
+            npcRecord = npcRecord.substring(npcNewline + 1);
+
+            npcNewline = npcRecord.indexOf('\n');
+            String locationName = npcRecord.substring(0, npcNewline).trim();
+            npcRecord = npcRecord.substring(npcNewline + 1);
+
+            npcNewline = npcRecord.indexOf('\n');
+            String description = npcRecord.substring(0,npcNewline).trim();
+            npcRecord = npcRecord.substring(npcNewline + 1);
+
+            Location location = campus.getLocation(locationName);
+            if (location == null) {
+                throw new IllegalArgumentException("NPC location not found");
+            }
+            NPC npc = new NPC(name, description);
+            String[] npcSections = npcRecord.split("---");
+            for (int j = 0; j < npcSections.length; j++) {
+                String section = npcSections[j].trim();
+                if (!section.isEmpty()) {
+                    npc.addDialogueSection(section);
+                }
+            }
+            location.addNPC(npc);
+        }
     }
 
     private static void setUpEvents(Campus campus, String eventSection){

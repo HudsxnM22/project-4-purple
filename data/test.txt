@@ -191,3 +191,115 @@ For Five Coffee
 Today we are serving chocolate chip scones!
 +++
 *****
+NPCs:
+UMW Student 1
+Combs Hall
+A UMW student is handing out free eagle plushies.
+---
+Hello, welcome to UMW!
+---
+1. Hi!
+2. Hello!
+---
+1
+2
+---
+Hi! How is your time here?
+Hello! How is your time here?
+---
+CONTINUE
+CONTINUE
+---
+1. It is great! I love the campus here.
+2. I love it so far.
+---
+1
+2
+---
+I love the campus too! Would you like a free eagle plushie?
+That is great to hear! Would you like a free eagle plushie?
+---
+CONTINUE
+CONTINUE
+---
+1. Yes! Thank you so much.
+2. No, thank you!
+---
+1
+2
+---
+Here you go. I hope you enjoy it.
+Okay, no problem!
+---
+CONTINUE
+CONTINUE
+---
+1. Goodbye!
+---
+1
+---
+Goodbye! Have a nice day.
+---
+END
++++
+UMW Student 2
+George Washington Hall
+A UMW student has a fun quiz to play.
+---
+Hello! Would you like to play a quiz?
+---
+1. Sure! I would love to play.
+2. No, thank you.
+---
+1
+2
+---
+Okay! Let's get started.
+Alright then. Have a nice day.
+---
+CONTINUE
+END
+---
+What is the most common letter used in the English alphabet?
+1. The answer is e.
+2. The answer is a.
+3. The answer is t.
+---
+1
+2
+3
+---
+That is correct!
+Sorry, that is incorrect.
+Sorry, that is incorrect.
+---
+CONTINUE
+CONTINUE
+CONTINUE
+---
+How many possible shifts in a Caesar cipher?
+1. It is 26
+2. It is 25.
+3. It is 12.
+---
+1
+2
+3
+---
+Sorry, that is incorrect and that was all the questions.
+That is correct and that was all the questions.
+Sorry, that is incorrect and that was all the questions.
+---
+CONTINUE
+CONTINUE
+CONTINUE
+---
+1. That was fun! Thank you, goodbye.
+---
+1
+---
+Thanks for playing. Goodbye!
+---
+END
++++
+*****
